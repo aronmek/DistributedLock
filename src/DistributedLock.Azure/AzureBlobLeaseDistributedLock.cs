@@ -114,7 +114,7 @@ public sealed partial class AzureBlobLeaseDistributedLock : IInternalDistributed
         {
             if (acquireException.ErrorCode == AzureErrors.LeaseAlreadyPresent) { return null; }
 
-            if (acquireException.ErrorCode == AzureErrors.BlobNotFound)
+            if (acquireException.ErrorCode == AzureErrors.BlobNotFound || acquireException.SoftDeleteBlobNotFound)
             {
                 // if we just created and it already doesn't exist again, just return null and retry later
                 if (isRetryAfterCreate) { return null; }
